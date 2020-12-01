@@ -1,0 +1,104 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+/* You can add global styles to this file, and also import other style files */
+.pointer {
+  cursor: pointer !important;
+}
+
+.navbar-search-light .input-group {
+  border-color: #cfd8dc !important;
+}
+
+.navbar-search-light .input-group .input-group-text {
+  color: #cfd8dc !important;
+}
+
+::-webkit-scrollbar {
+  width: 5px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+  height: 8px;
+  border-radius: 13px;
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #f5365c;
+  border-radius: 8px;
+}
+
+ngx-skeleton-loader {
+  .loader.progress {
+    height: 50px !important;
+  }
+}
+
+.highlight-hover-primary:hover {
+  background: #b3e5fc;
+  color: #2196f3;
+}
+
+.extreme-rounded {
+  border-radius: 20px !important;
+}
+
+.row-fluid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dashed {
+  border-style: dashed;
+  border-color: #bdbdbd;
+}
+
+.dashed:hover {
+  border-style: dashed;
+  border-color: #f5365c;
+}
+
+ngb-progressbar {
+  .progress {
+    height: 15px !important;
+  }
+}
+
+.wh-150-px,
+.w-150-px {
+  width: 150px !important;
+}
+
+.wh-150-px,
+.h-150-px {
+  height: 150px !important;
+}
+
+.ngb-progress-150-px {
+  width: 150px !important;
+
+  .progress {
+    width: 150px !important;
+  }
+}
+
+.img-container {
+  /*width: 200px;*/
+  /*height: 200px;*/
+  /*max-height: 200px;*/
+  overflow: hidden;
+  margin: 0;
+  position: relative;
+}
+
+.img-container img {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 100%;
+}
+
+// Ng Select
+.ng-select-container {
+  height: 46px !important;
+}
+.ng-arrow-wrapper {
+  margin-right: 40px !important;
+}

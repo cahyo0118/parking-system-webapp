@@ -1,0 +1,180 @@
+<div class="container mt--7">
+    <div class="row">
+        <div class="col">
+            <form [formGroup]="form"
+                  (submit)="onSubmit()">
+
+                <div class="card shadow">
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0">
+                            <i [class]="menu?.icon"></i>
+                            {{ isUpdate ? 'Update' : 'Create' }} {{ menu?.display_name }}
+                        </h3>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row-fluid">
+                            <div class="col-12">
+                                <div class="d-flex">
+                                    <i class="fas fa-quote-right fa-2x text-muted"></i>
+                                    <div class="px-3 w-100">
+                                        <!-- <h2>
+                                            <b>Basic Info</b>
+                                        </h2> -->
+
+                                        <div class="row-fluid mt-3">
+
+
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
+                                                <div class="row-fluid">
+
+                                                    <div class="col-12 p-0 mb-2">
+                                                        <label class="form-control-label">Name</label>
+                                                        <div class="form-group"
+                                                             [ngClass]="{
+                                                            'has-success': form?.controls?.name?.errors?.length < 1,
+                                                            'has-danger': form?.controls?.name?.errors
+                                                        }">
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   formControlName="name">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 p-0 mb-2">
+                                                        <label class="form-control-label">Email</label>
+                                                        <div class="form-group"
+                                                             [ngClass]="{
+                                                            'has-success': form?.controls?.email?.errors?.length < 1,
+                                                            'has-danger': form?.controls?.email?.errors
+                                                        }">
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   formControlName="email">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 p-0 mb-2">
+                                                        <label class="form-control-label">Kata sandi</label>
+                                                        <div class="form-group"
+                                                             [ngClass]="{
+                                                            'has-success': form?.controls?.password?.errors?.length < 1,
+                                                            'has-danger': form?.controls?.password?.errors
+                                                        }">
+                                                            <input type="password"
+                                                                   class="form-control"
+                                                                   formControlName="password">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 p-0 mb-2">
+
+                                                        <input #photoInput
+                                                               type="file"
+                                                               accept="image/*"
+                                                               style="display: none;"
+                                                               (change)="onPhotoChange($event, 'photo')">
+
+                                                        <label class="form-control-label">Foto Profil</label>
+                                                        <div class="form-group"
+                                                             [ngClass]="{
+                                                            'has-success': form?.controls?.photo?.errors?.length < 1,
+                                                            'has-danger': form?.controls?.photo?.errors
+                                                        }">
+                                                            <div class="dashed rounded img-container smooth-border pointer wh-150-px"
+                                                                 (click)="photoInput.click()">
+                                                                <img [src]="(photoPreview) ? photoPreview : env?.SERVER_URL + 'files/' + form?.value?.photo"
+                                                                     onerror="this.src = './assets/img/no-picture.svg'"
+                                                                     class="w-100 my-auto">
+                                                            </div>
+
+                                                            <div class="w-100 mt-2"
+                                                                 *ngIf="photoUploadProgress">
+                                                                <ngb-progressbar class="ngb-progress-150-px"
+                                                                                 type="primary"
+                                                                                 textType="white"
+                                                                                 [value]="photoUploadProgress"
+                                                                                 [showValue]="true">
+                                                                </ngb-progressbar>
+                                                            </div>
+
+                                                            <div class="w-100 mt-2"
+                                                                 *ngIf="!photoUploadProgress">
+
+                                                                <button type="button"
+                                                                        class="btn btn-outline-danger btn-sm w-150-px"
+                                                                        *ngIf="form?.value?.photo || photoPreview"
+                                                                        (click)="onDeletePhoto('photo')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                    <span>Hapus</span>
+                                                                </button>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 p-0 mb-2">
+                                                        <label class="form-control-label">Jenis Kelamin</label>
+                                                        <div class="form-group"
+                                                             [ngClass]="{
+                                                            'has-success': form?.controls?.gender?.errors?.length < 1,
+                                                            'has-danger': form?.controls?.gender?.errors
+                                                        }">
+
+                                                            <div
+                                                                 class="custom-control custom-control-alternative custom-radio mb-3">
+                                                                <input formControlName="gender"
+                                                                       class="custom-control-input"
+                                                                       id="radio_gender_male"
+                                                                       value="male"
+                                                                       type="radio">
+                                                                <label class="custom-control-label"
+                                                                       for="radio_gender_male">Laki - Laki</label>
+                                                            </div>
+                                                            <div
+                                                                 class="custom-control custom-control-alternative custom-radio mb-3">
+                                                                <input formControlName="gender"
+                                                                       class="custom-control-input"
+                                                                       id="radio_gender_female"
+                                                                       value="female"
+                                                                       type="radio">
+                                                                <label class="custom-control-label"
+                                                                       for="radio_gender_female">Perempuan</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary"
+                                type="button"
+                                (click)="onSubmit()"
+                                [disabled]="!form?.valid">
+                            Simpan
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>

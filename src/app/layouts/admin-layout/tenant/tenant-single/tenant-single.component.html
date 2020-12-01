@@ -1,0 +1,134 @@
+<!-- Page content -->
+<div class="container mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card shadow">
+                <div class="card-header bg-transparent">
+                    <h3 class="mb-0">
+                        <i [class]="menu?.icon"></i>
+                        Detail {{ menu?.display_name }}
+                    </h3>
+                </div>
+                <div class="card-body">
+
+                    <div class="row-fluid">
+                        <div class="col-12">
+                            <div class="d-flex">
+                                <i class="fas fa-quote-right fa-2x text-muted"></i>
+                                <div class="px-3 w-100">
+                                    <h2>
+                                        <b>Basic Info</b>
+                                    </h2>
+
+                                    <div class="row-fluid mt-3">
+
+
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
+                                            <div class="row-fluid">
+
+                                                <div class="col-12 p-0 mb-2">
+
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Logo</label>
+                                                        <div
+                                                             class="dashed rounded img-container smooth-border wh-150-px">
+                                                            <img [src]="env?.SERVER_URL + 'files/' + data?.logo"
+                                                                 onerror="this.src = './assets/img/no-picture.svg'"
+                                                                 class="w-100 my-auto">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Name</label>
+                                                        <p>{{ data?.name }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Short Name</label>
+                                                        <p>{{ data?.short_name }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Description</label>
+                                                        <p>{{ data?.description }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Address</label>
+                                                        <p>{{ data?.address }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Verification</label>
+                                                        <p>{{ data?.is_verified ? 'Verified' : 'Unverified' }}</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-12">
+            <div class="nav-wrapper">
+                <ul class="nav nav-pills nav-fill flex-column flex-md-row"
+                    id="tabs-icons-text"
+                    role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link mb-sm-3 mb-md-0 pointer"
+                           [routerLink]="['community']"
+                           routerLinkActive="active">
+                            <i class="fas fa-users"></i>
+                            Community
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mb-sm-3 mb-md-0 pointer"
+                           [routerLink]="['member']"
+                           routerLinkActive="active">
+                            <i class="fas fa-user"></i>
+                            Member
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mb-sm-3 mb-md-0 pointer"
+                           [routerLink]="['admin']"
+                           routerLinkActive="active">
+                            <i class="fas fa-user-check"></i>
+                            Admin
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

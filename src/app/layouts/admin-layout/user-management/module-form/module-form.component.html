@@ -1,0 +1,131 @@
+<!-- Page content -->
+<div class="container mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="card shadow">
+          <div class="card-header bg-transparent">
+            <h3 class="mb-0">
+              <i [class]="menu?.icon"></i>
+              {{ isUpdate ? "Update" : "Create" }} {{ menu?.display_name }}
+            </h3>
+          </div>
+
+          <div class="card-body">
+            <div class="row-fluid">
+              <div class="col-12">
+                <div class="d-flex">
+                  <i class="fas fa-quote-right fa-2x text-muted"></i>
+                  <div class="px-3 w-100">
+                    <h2>
+                      <b>Basic Info</b>
+                    </h2>
+
+                    <div class="row-fluid mt-3">
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
+                        <div class="row-fluid">
+                          <div class="col-12 p-0 mb-2">
+                            <label class="form-control-label">Name</label>
+                            <div
+                              class="form-group"
+                              [ngClass]="{
+                                'has-success':
+                                  form?.controls?.name?.errors?.length < 1,
+                                'has-danger': form?.controls?.name?.errors
+                              }"
+                            >
+                              <input
+                                type="text"
+                                formControlName="name"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid':
+                                    form?.controls?.name?.errors?.length < 1,
+                                  'is-invalid': form?.controls?.name?.errors
+                                }"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <label class="form-control-label"
+                              >Display Name</label
+                            >
+                            <div
+                              class="form-group"
+                              [ngClass]="{
+                                'has-success':
+                                  form?.controls?.display_name?.errors?.length <
+                                  1,
+                                'has-danger':
+                                  form?.controls?.display_name?.errors
+                              }"
+                            >
+                              <input
+                                type="text"
+                                formControlName="display_name"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid':
+                                    form?.controls?.display_name?.errors
+                                      ?.length < 1,
+                                  'is-invalid':
+                                    form?.controls?.display_name?.errors
+                                }"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <label class="form-control-label"
+                              >Description</label
+                            >
+                            <div
+                              class="form-group"
+                              [ngClass]="{
+                                'has-success':
+                                  form?.controls?.description?.errors?.length <
+                                  1,
+                                'has-danger':
+                                  form?.controls?.description?.errors
+                              }"
+                            >
+                              <textarea
+                                formControlName="description"
+                                class="form-control"
+                                rows="4"
+                                [ngClass]="{
+                                  'is-valid':
+                                    form?.controls?.description?.errors
+                                      ?.length < 1,
+                                  'is-invalid':
+                                    form?.controls?.description?.errors
+                                }"
+                              ></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer text-right">
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="onSubmit()"
+              [disabled]="!form?.valid"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

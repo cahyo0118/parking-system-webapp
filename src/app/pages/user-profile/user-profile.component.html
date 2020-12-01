@@ -1,0 +1,283 @@
+<!-- Page content -->
+<div class="container mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="form"
+            (submit)="onSubmit()">
+
+        <div class="card shadow">
+          <div class="card-header bg-transparent">
+            <h3 class="mb-0">
+              <i [class]="menu?.icon"></i>
+              {{ isUpdate ? 'Update' : 'Create' }} {{ menu?.display_name }}
+            </h3>
+          </div>
+          <div class="card-body">
+
+            <div class="row-fluid">
+              <div class="col-12">
+                <div class="d-flex">
+                  <i class="fas fa-quote-right fa-2x text-muted"></i>
+                  <div class="px-3 w-100">
+                    <h2>
+                      <b>Basic Info</b>
+                    </h2>
+
+                    <div class="row-fluid mt-3">
+
+
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
+                        <div class="row-fluid">
+
+                          <div class="col-12 p-0 mb-2">
+                            <label class="form-control-label">Name</label>
+                            <div class="form-group"
+                                 [ngClass]="{
+                                                          'has-success': form?.controls?.name?.errors?.length < 1,
+                                                          'has-danger': form?.controls?.name?.errors
+                                                      }">
+                              <input type="text"
+                                     class="form-control"
+                                     formControlName="name">
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <label class="form-control-label">Email</label>
+                            <div class="form-group"
+                                 [ngClass]="{
+                                                          'has-success': form?.controls?.email?.errors?.length < 1,
+                                                          'has-danger': form?.controls?.email?.errors
+                                                      }">
+                              <input type="text"
+                                     class="form-control"
+                                     formControlName="email">
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <label class="form-control-label">Username</label>
+                            <div class="form-group"
+                                 [ngClass]="{
+                                                          'has-success': form?.controls?.username?.errors?.length < 1,
+                                                          'has-danger': form?.controls?.username?.errors
+                                                      }">
+                              <input type="text"
+                                     class="form-control"
+                                     formControlName="username">
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <label class="form-control-label">WhatsApp Number</label>
+                            <div class="form-group"
+                                 [ngClass]="{
+                                                          'has-success': form?.controls?.phoneWA?.errors?.length < 1,
+                                                          'has-danger': form?.controls?.phoneWA?.errors
+                                                      }">
+
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text text-success">
+                                    <i class="fab fa-whatsapp mr-2"></i> +62
+                                  </span>
+                                </div>
+                                <input type="number"
+                                       class="form-control"
+                                       formControlName="phoneWA">
+
+                              </div>
+
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+
+                            <input #photoInput
+                                   type="file"
+                                   accept="image/*"
+                                   style="display: none;"
+                                   (change)="onPhotoChange($event, 'photo')">
+
+                            <label class="form-control-label">Photo</label>
+                            <div class="form-group"
+                                 [ngClass]="{
+                                                          'has-success': form?.controls?.photo?.errors?.length < 1,
+                                                          'has-danger': form?.controls?.photo?.errors
+                                                      }">
+                              <div class="dashed rounded img-container smooth-border pointer wh-150-px"
+                                   (click)="photoInput.click()">
+                                <img [src]="(photoPreview) ? photoPreview : env?.SERVER_URL + 'files/' + form?.value?.photo"
+                                     onerror="this.src = './assets/img/no-picture.svg'"
+                                     class="w-100 my-auto">
+                              </div>
+
+                              <div class="w-100 mt-2"
+                                   *ngIf="photoUploadProgress">
+                                <ngb-progressbar class="ngb-progress-150-px"
+                                                 type="primary"
+                                                 textType="white"
+                                                 [value]="photoUploadProgress"
+                                                 [showValue]="true">
+                                </ngb-progressbar>
+                              </div>
+
+                              <div class="w-100 mt-2"
+                                   *ngIf="!photoUploadProgress">
+
+                                <button type="button"
+                                        class="btn btn-outline-danger btn-sm w-150-px"
+                                        *ngIf="form?.value?.photo || photoPreview"
+                                        (click)="onDeletePhoto('photo')">
+                                  <i class="fas fa-trash"></i>
+                                  <span>Hapus</span>
+                                </button>
+
+                              </div>
+
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <label class="form-control-label">Password</label>
+                            <div class="form-group"
+                                 [ngClass]="{
+                                                          'has-success': form?.controls?.password?.errors?.length < 1,
+                                                          'has-danger': form?.controls?.password?.errors
+                                                      }">
+                              <input type="password"
+                                     class="form-control"
+                                     formControlName="password">
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <label class="form-control-label">Gender</label>
+                            <div class="form-group"
+                                 [ngClass]="{
+                                                          'has-success': form?.controls?.gender?.errors?.length < 1,
+                                                          'has-danger': form?.controls?.gender?.errors
+                                                      }">
+
+                              <div class="custom-control custom-control-alternative custom-radio mb-3">
+                                <input formControlName="gender"
+                                       class="custom-control-input"
+                                       id="radio_gender_male"
+                                       value="male"
+                                       type="radio">
+                                <label class="custom-control-label"
+                                       for="radio_gender_male">Male</label>
+                              </div>
+                              <div class="custom-control custom-control-alternative custom-radio mb-3">
+                                <input formControlName="gender"
+                                       class="custom-control-input"
+                                       id="radio_gender_female"
+                                       value="female"
+                                       type="radio">
+                                <label class="custom-control-label"
+                                       for="radio_gender_female">Female</label>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <label class="form-control-label">Tanggal Lahir</label>
+                            <div class="form-group"
+                                 [ngClass]="{
+                                                               'has-success': form?.controls?.dateBirth?.errors?.length < 1,
+                                                               'has-danger': form?.controls?.dateBirth?.errors
+                                                              }">
+
+                              <input type="text"
+                                     ngbDatepicker
+                                     #dateBirth="ngbDatepicker"
+                                     formControlName="dateBirth"
+                                     class="form-control"
+                                     (click)="dateBirth.toggle()"
+                                     readonly
+                                     [ngClass]="{
+                                                                     'is-valid': form?.controls?.dateBirth?.errors?.length < 1,
+                                                                     'is-invalid': form?.controls?.dateBirth?.errors
+                                                                  }">
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <label class="form-control-label">Tahun Masuk</label>
+                            <div class="form-group"
+                                 [ngClass]="{
+                                                               'has-success': form?.controls?.yearStartCollege?.errors?.length < 1,
+                                                               'has-danger': form?.controls?.yearStartCollege?.errors
+                                                              }">
+
+                              <input type="text"
+                                     ngbDatepicker
+                                     #yearStartCollege="ngbDatepicker"
+                                     formControlName="yearStartCollege"
+                                     class="form-control"
+                                     (click)="yearStartCollege.toggle()"
+                                     readonly
+                                     [ngClass]="{
+                                                                  'is-valid': form?.controls?.yearStartCollege?.errors?.length < 1,
+                                                                  'is-invalid': form?.controls?.yearStartCollege?.errors
+                                                               }">
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <label class="form-control-label">Tahun Lulus</label>
+                            <div class="form-group"
+                                 [ngClass]="{
+                                                               'has-success': form?.controls?.yearGraduate?.errors?.length < 1,
+                                                               'has-danger': form?.controls?.yearGraduate?.errors
+                                                              }">
+
+                              <input type="text"
+                                     ngbDatepicker
+                                     #yearGraduate="ngbDatepicker"
+                                     formControlName="yearGraduate"
+                                     class="form-control"
+                                     (click)="yearGraduate.toggle()"
+                                     readonly
+                                     [ngClass]="{
+                                                                     'is-valid': form?.controls?.yearGraduate?.errors?.length < 1,
+                                                                     'is-invalid': form?.controls?.yearGraduate?.errors
+                                                                  }">
+                            </div>
+                          </div>
+
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+
+          <div class="card-footer text-right">
+            <button class="btn btn-primary"
+                    type="button"
+                    (click)="onSubmit()"
+                    [disabled]="!form?.valid">
+              Submit
+            </button>
+          </div>
+
+        </div>
+
+      </form>
+
+
+    </div>
+  </div>
+</div>

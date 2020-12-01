@@ -1,0 +1,184 @@
+<div class="container mt--7">
+    <div class="row">
+        <div class="col">
+            <form [formGroup]="form" (submit)="onSubmit()">
+
+                <div class="card shadow">
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0">
+                            <i [class]="menu?.icon"></i> {{ isUpdate ? 'Update' : 'Create' }} {{ menu?.display_name }}
+                        </h3>
+                    </div>
+                    <div class="card-body">
+
+                        <form [formGroup]="form">
+                            <div class="row-fluid">
+                                <div class="col-12">
+                                    <div class="d-flex">
+                                        <!-- <i class="fas fa-quote-right fa-2x text-muted"></i> -->
+                                        <div class="px-3 w-100">
+                                            <!-- <h2>
+                                                <b>Basic Info</b>
+                                            </h2> -->
+
+                                            <div class="row-fluid mt-3">
+
+                                                <div class="col-12 mt-4">
+                                                    <div class="item">
+                                                        <ngx-skeleton-loader count="10" *ngIf="showLoader">
+                                                        </ngx-skeleton-loader>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+
+                                                    <input #photoInput type="file" accept="image/*" style="display: none;" (change)="onPhotoChange($event, 'photo')">
+
+                                                    <label class="form-control-label">Foto Komunitas</label>
+                                                    <div class="form-group" [ngClass]="{
+                                                        'has-success': form?.controls?.photo?.errors?.length < 1,
+                                                        'has-danger': form?.controls?.photo?.errors
+                                                       }">
+                                                        <div class="rounded img-container smooth-border pointer wh-150-px" (click)="photoInput.click()">
+                                                            <img [src]="(photoPreview) ? photoPreview : env?.SERVER_URL + 'files/' + form?.value?.photo" onerror="this.src = './assets/img/frame.png'" class="w-100 my-auto">
+                                                        </div>
+
+                                                        <div class="w-100 mt-2" *ngIf="photoUploadProgress">
+                                                            <ngb-progressbar class="ngb-progress-150-px" type="primary" textType="white" [value]="photoUploadProgress" [showValue]="true">
+                                                            </ngb-progressbar>
+                                                        </div>
+
+                                                        <div class="w-100 mt-2" *ngIf="!photoUploadProgress">
+
+                                                            <button type="button" class="btn btn-outline-danger btn-sm w-150-px" *ngIf="form?.value?.photo || photoPreview" (click)="onDeletePhoto('photo')">
+                                                                <i class="fas fa-trash"></i>
+                                                                <span>Hapus</span>
+                                                            </button>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+                                                    <label class="form-control-label">Nama Komunitas</label>
+                                                    <div class="form-group" [ngClass]="{
+                                                             'has-success': form?.controls?.name?.errors?.length < 1,
+                                                             'has-danger': form?.controls?.name?.errors
+                                                            }">
+                                                        <input type="text" formControlName="name" class="form-control" [ngClass]="{
+                                                                   'is-valid': form?.controls?.name?.errors?.length < 1,
+                                                                   'is-invalid': form?.controls?.name?.errors
+                                                                }">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+                                                    <label class="form-control-label">Deskripsi</label>
+                                                    <div class="form-group" [ngClass]="{
+                                                             'has-success': form?.controls?.description?.errors?.length < 1,
+                                                             'has-danger': form?.controls?.description?.errors
+                                                            }">
+                                                        <textarea formControlName="description" class="form-control" [ngClass]="{
+                                                                   'is-valid': form?.controls?.description?.errors?.length < 1,
+                                                                   'is-invalid': form?.controls?.description?.errors
+                                                                }"></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+                                                    <label class="form-control-label">Kategori</label>
+                                                    <div class="form-group" [ngClass]="{
+                                                        'has-success': form?.controls?.communityCategoryId?.errors?.length < 1,
+                                                        'has-danger': form?.controls?.communityCategoryId?.errors
+                                                       }">
+                                                        <ng-select formControlName="communityCategoryId" [items]="categories" [loading]="categoriesShowLoader" bindLabel="name" bindValue="id" autofocus>
+
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+                                                    <label class="form-control-label">Privasi</label>
+                                                    <div class="form-group" [ngClass]="{
+                                                             'has-success': form?.controls?.type?.errors?.length < 1,
+                                                             'has-danger': form?.controls?.type?.errors
+                                                            }">
+
+                                                        <div class="custom-control custom-control-alternative custom-radio mb-3">
+                                                            <input formControlName="type" class="custom-control-input" id="radioPublic" value="public" type="radio">
+                                                            <label class="custom-control-label" for="radioPublic"><h4 class="mb-0">Public</h4>siapa saja dapat bebas bergabung kedalam komunitas</label>
+                                                        </div>
+                                                        <div class="custom-control custom-control-alternative custom-radio mb-3">
+                                                            <input formControlName="type" class="custom-control-input" id="radioPrivate" value="private" type="radio">
+                                                            <label class="custom-control-label" for="radioPrivate"><h4 class="mb-0">Private</h4>hanya yang disetujui saja yang dapat bergabung ke dalam komunitas</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+                                                    <label class="form-control-label">Visibilitas</label>
+                                                    <div class="form-group" [ngClass]="{
+                                                             'has-success': form?.controls?.visibility?.errors?.length < 1,
+                                                             'has-danger': form?.controls?.visibility?.errors
+                                                            }">
+                                                        <div class="custom-control custom-control-alternative custom-radio mb-3">
+                                                            <input formControlName="visibility" class="custom-control-input" id="radioShow" value="show" type="radio">
+                                                            <label class="custom-control-label" for="radioShow"><h4 class="mb-0">Show</h4>komunitas dapat terlihat saat pencarian</label>
+                                                        </div>
+                                                        <div class="custom-control custom-control-alternative custom-radio mb-3">
+                                                            <input formControlName="visibility" class="custom-control-input" id="radioHide" value="hide" type="radio">
+                                                            <label class="custom-control-label" for="radioHide"><h4 class="mb-0">Hide</h4>komunitas tidak dapat terlihat saat pencarian</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+                                                    <label class="form-control-label">Website</label>
+                                                    <div class="form-group" [ngClass]="{
+                                                             'has-success': form?.controls?.website?.errors?.length < 1,
+                                                             'has-danger': form?.controls?.website?.errors
+                                                            }">
+                                                        <input type="text" formControlName="website" class="form-control" [ngClass]="{
+                                                                   'is-valid': form?.controls?.website?.errors?.length < 1,
+                                                                   'is-invalid': form?.controls?.website?.errors
+                                                                }">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 p-0 mb-2">
+                                                    <label class="form-control-label">Berdiri pada tanggal</label>
+                                                    <div class="form-group" [ngClass]="{
+                                                             'has-success': form?.controls?.dateBirth?.errors?.length < 1,
+                                                             'has-danger': form?.controls?.dateBirth?.errors
+                                                            }">
+                                                        <input type="text" formControlName="dateBirth" class="form-control" [ngClass]="{
+                                                                   'is-valid': form?.controls?.dateBirth?.errors?.length < 1,
+                                                                   'is-invalid': form?.controls?.dateBirth?.errors
+                                                                }" ngbDatepicker #dateBirthPicker="ngbDatepicker" (click)="dateBirthPicker.toggle()">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary" type="button" (click)="onSubmit()" [disabled]="!form.valid">
+                            Submit
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

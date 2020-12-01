@@ -1,0 +1,132 @@
+<div class="container mt-lg-5">
+  <div class="row justify-content-center align-content-center">
+    <div class="col-12">
+      <div class="card shadow border-0 mt-4" style="border-radius: 20px">
+        <div class="row-fluid">
+          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 px-3">
+            <div class="card-header bg-transparent">
+              <div class="w-100 text-center">
+                <img
+                  src="./assets/img/brand/logo-admin.png"
+                  class="mt-5 mb-5"
+                  style="width: 150px"
+                />
+                <h1 class="mb-4">{{ env?.APP_NAME }}</h1>
+              </div>
+
+              <!-- <div class="btn-wrapper text-center w-100">
+                                <a class="btn btn-neutral btn-icon w-100">
+                                    <span class="btn-inner--icon">
+                                      <img src="./assets/img/icons/common/google.svg" class="float-left">
+                                    </span>
+                                    <span class="btn-inner--text">Log in with Google</span>
+                                </a>
+                            </div> -->
+            </div>
+
+            <div class="card-header bg-transparent pb-5">
+              <div class="text-center text-muted mb-4">
+                <small>Masuk dengan akun Anda</small>
+              </div>
+
+              <form [formGroup]="form" (submit)="onSubmit()">
+                <div class="form-group mb-3">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="border-right: 0"
+                        ><i class="fa fas fa-envelope"></i
+                      ></span>
+                    </div>
+                    <input
+                      class="form-control"
+                      formControlName="username"
+                      placeholder="Email Akun"
+                      type="email"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="fa fas fa-unlock"></i
+                      ></span>
+                    </div>
+                    <input
+                      class="form-control"
+                      formControlName="password"
+                      placeholder="Kata Sandi"
+                      type="password"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="row-fluid no-gutters d-none">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="custom-control custom-checkbox">
+                      <input
+                        class="custom-control-input"
+                        id="customCheckLogin"
+                        formControlName="keepLoggedIn"
+                        type="checkbox"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for=" customCheckLogin"
+                      >
+                        <span class="text-muted">Keep me logged in</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <span
+                      class="float-right text-underline pointer"
+                      [routerLink]="['/forget-password']"
+                    >
+                      <small>Forgot password?</small>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <button
+                    type="submit"
+                    class="btn btn-icon btn-danger mt-4 mb-2 w-100"
+                    [disabled]="!form?.valid"
+                  >
+                    <span class="btn-inner--text">Log in</span>
+                    <span class="btn-inner--icon float-right"
+                      ><i class="fa fas fa-arrow-right"></i
+                    ></span>
+                  </button>
+                </div>
+
+                <!-- <hr class="mt-2 mb-4">
+
+                <div class="w-100 text-center">
+                  <span><small>Don't have an account yet?</small></span>
+                  &nbsp;
+                  <span class="text-danger text-underline pointer"
+                        [routerLink]="['/register']"><small>Register</small></span>
+                </div> -->
+              </form>
+            </div>
+          </div>
+
+          <div
+            class="col-xl-6 col-lg-6 d-xl-inline d-lg-inline d-md-none d-sm-none d-none my-auto p-6"
+          >
+            <img
+              src="./assets/illustration/login-illustration.svg"
+              class="w-100"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
