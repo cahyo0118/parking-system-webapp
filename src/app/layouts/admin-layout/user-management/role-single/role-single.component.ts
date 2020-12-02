@@ -1,7 +1,8 @@
 import { Environment } from './../../../../config/environment';
 import { ActivatedRoute } from '@angular/router';
 import { APIService } from './../../../../service/api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { RolePermissionComponent } from '../role-permission/role-permission.component';
 
 @Component({
   selector: 'app-role-single',
@@ -21,6 +22,8 @@ export class RoleSingleComponent implements OnInit {
     display_name: 'Role',
     icon: 'fas fa-user-tag'
   };
+
+  @ViewChild('role_permission') role_permission_component: RolePermissionComponent;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -50,12 +53,19 @@ export class RoleSingleComponent implements OnInit {
 
   getData() {
     this.apiService.get(
-      `api/roles/${this.id}/detail`
+      `api/roles/${this.id}/detail`,
+      {
+        params: {
+          with: ['permissions']
+        }
+      }
     ).then(
       response => {
         const responseBody = response.data.body;
 
         this.data = responseBody;
+
+        this.role_permission_component.setData(this.data);
       }
     );
   }

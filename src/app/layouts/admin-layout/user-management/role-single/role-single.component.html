@@ -1,70 +1,65 @@
 <div class="container mt--7">
-    <div class="row">
-        <div class="col">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <h3 class="mb-0">
+            <i [class]="menu?.icon"></i>
+            Detail {{ menu?.display_name }}
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="row-fluid">
+            <div class="col-12">
+              <div class="d-flex">
+                <i class="fas fa-quote-right fa-2x text-muted"></i>
+                <div class="px-3 w-100">
+                  <h2>
+                    <b>Basic Info</b>
+                  </h2>
 
-            <div class="card shadow">
-                <div class="card-header bg-transparent">
-                    <h3 class="mb-0">
-                        <i [class]="menu?.icon"></i>
-                        Detail {{ menu?.display_name }}
-                    </h3>
-                </div>
-                <div class="card-body">
-
-                    <div class="row-fluid">
-                        <div class="col-12">
-                            <div class="d-flex">
-                                <i class="fas fa-quote-right fa-2x text-muted"></i>
-                                <div class="px-3 w-100">
-                                    <h2>
-                                        <b>Basic Info</b>
-                                    </h2>
-
-                                    <div class="row-fluid mt-3">
-
-
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
-                                            <div class="row-fluid">
-
-                                                <div class="col-12 p-0 mb-2">
-                                                    <div class="form-group">
-                                                        <label class="form-control-label">Name</label>
-                                                        <p>{{ data?.name }}</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12 p-0 mb-2">
-                                                    <div class="form-group">
-                                                        <label class="form-control-label">Display Name</label>
-                                                        <p>{{ data?.display_name }}</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12 p-0 mb-2">
-                                                    <div class="form-group">
-                                                        <label class="form-control-label">Description</label>
-                                                        <p>{{ data?.description }}</p>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-
-
-                            </div>
+                  <div class="row-fluid mt-3">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
+                      <div class="row-fluid">
+                        <div class="col-12 p-0 mb-2">
+                          <div class="form-group">
+                            <label class="form-control-label">Name</label>
+                            <p>{{ data?.name }}</p>
+                          </div>
                         </div>
 
+                        <div class="col-12 p-0 mb-2">
+                          <div class="form-group">
+                            <label class="form-control-label"
+                              >Display Name</label
+                            >
+                            <p>{{ data?.display_name }}</p>
+                          </div>
+                        </div>
+
+                        <div class="col-12 p-0 mb-2">
+                          <div class="form-group">
+                            <label class="form-control-label"
+                              >Description</label
+                            >
+                            <p>{{ data?.description }}</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-
-
+                  </div>
                 </div>
-
+              </div>
             </div>
-
+          </div>
         </div>
+      </div>
     </div>
+
+    <div class="col-12 mt-3">
+      <app-role-permission
+        #role_permission
+      ></app-role-permission>
+    </div>
+  </div>
 </div>

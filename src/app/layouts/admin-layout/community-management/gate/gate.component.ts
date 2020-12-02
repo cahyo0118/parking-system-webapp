@@ -7,11 +7,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.css']
+  selector: 'app-gate',
+  templateUrl: './gate.component.html',
+  styleUrls: ['./gate.component.css']
 })
-export class CategoryComponent implements OnInit {
+export class GateComponent implements OnInit {
 
   showLoader: boolean = false;
   items = [];
@@ -40,9 +40,9 @@ export class CategoryComponent implements OnInit {
   ];
 
   menu = {
-    name: 'category-list',
-    display_name: 'Category',
-    icon: 'fas fa-tasks'
+    name: 'gate-list',
+    display_name: 'Gate',
+    icon: 'fas fa-torii-gate'
   };
 
   constructor(
@@ -80,7 +80,7 @@ export class CategoryComponent implements OnInit {
     const requestData = JSON.parse(JSON.stringify(this.searchForm.value));
 
     this.apiService.get(
-      `api/category`,
+      `api/gates`,
       {
         params: {
           keyword: requestData.keyword,
@@ -192,7 +192,7 @@ export class CategoryComponent implements OnInit {
 
         this.spinner.show();
         this.apiService.delete(
-          `api/category/${id}/delete`,
+          `api/gates/${id}/delete`,
           null
         ).then(
           response => {

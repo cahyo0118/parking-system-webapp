@@ -1,0 +1,180 @@
+<div class="card shadow">
+  <div class="card-header bg-transparent d-flex justify-content-between">
+    <h3 class="mb-0">
+      <i [class]="menu?.icon"></i>
+      {{ menu?.display_name }}
+    </h3>
+    <button class="btn btn-primary" (click)="onSubmit()">Save Changes</button>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 text-center mt-2">
+        <form
+          [formGroup]="searchForm"
+          (submit)="getAll()"
+          class="navbar-search navbar-search-light form-inline mr-3 ml-lg-auto justify-content-center"
+        >
+          <div class="form-group mb-0">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"
+                  ><i class="fas fa-search"></i
+                ></span>
+              </div>
+              <input
+                formControlName="keyword"
+                class="form-control"
+                placeholder="Search"
+                type="text"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-12 mt-4">
+        <div class="item">
+          <ngx-skeleton-loader count="10" *ngIf="showLoader">
+          </ngx-skeleton-loader>
+        </div>
+      </div>
+
+      <div class="col-12 mt-4">
+        <div class="row w-100 p-3">
+          <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <label class="w-100">
+              <input
+                type="checkbox"
+                class="mr-3"
+                value="true"
+                [checked]="is_permit_all"
+                (change)="onPermitAll()"
+              />
+              Permit All
+            </label>
+          </div>
+          <div class="col-9">&emsp;</div>
+        </div>
+      </div>
+
+      <div class="col-12 mt-4" *ngIf="!showLoader && !is_permit_all">
+        <div class="row w-100 p-3" *ngFor="let module of modules">
+          <div class="col-12">
+            <hr />
+            <h2># {{ module?.display_name }}</h2>
+            <label class="w-100">
+              <input
+                type="checkbox"
+                class="mr-3"
+                value="true"
+                [checked]="
+                  isModulePermitted(module?.id, module?.permissions?.length)
+                "
+                (change)="
+                  onPermitModule(module?.id, module?.permissions?.length)
+                "
+              />
+              Permit All
+            </label>
+          </div>
+
+          <div class="col-3" *ngFor="let permission of module?.permissions">
+            <label class="w-100">
+              <input
+                type="checkbox"
+                class="mr-3"
+                [value]="permission?.id"
+                [checked]="isPermitted(permission?.id)"
+                (change)="onPermit(permission)"
+              />
+              <p>{{ permission?.display_name }}</p>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div
+        class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-4"
+        *ngIf="!showLoader && is_permit_all"
+      >
+        <div class="container mb-5">
+          <img src="./assets/illustration/superhero.svg" class="w-100" />
+
+          <h1 class="text-center mt-4">You have super power!</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer" *ngIf="!is_permit_all">
+    <div class="row">
+      <div
+        class="col-xl-6 col-lg-6 col-md-12 col-sm-12 text-xl-left text-lg-left text-md-center text-sm-center text-center mt-2"
+      >
+        <p *ngIf="!showLoader">
+          Menampilkan {{ pageable?.from }} hingga {{ pageable?.to }} dari
+          {{ pageable?.total }} data
+        </p>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-2">
+        <nav>
+          <ul
+            class="pagination justify-content-lg-end justify-content-lg-end justify-content-md-center justify-content-sm-center justify-content-center"
+          >
+            <li
+              class="page-item"
+              [ngClass]="pageable?.currentPage === 1 ? 'disabled' : ''"
+            >
+              <a class="page-link" (click)="goToFirstPage()">
+                <i class="fas fa-angle-double-left"></i>
+                <span class="sr-only">First</span>
+              </a>
+            </li>
+            <li
+              class="page-item"
+              [ngClass]="pageable?.currentPage === 1 ? 'disabled' : ''"
+            >
+              <a class="page-link" (click)="goToPreviousPage()">
+                <i class="fas fa-angle-left"></i>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item my-auto">
+              <input
+                type="text"
+                [(ngModel)]="pageable.currentPage"
+                (change)="goCustom(pageable.currentPage)"
+                class="form-control form-control-sm my-auto text-center extreme-rounded"
+                style="width: 80px"
+              />
+            </li>
+            <li
+              class="page-item"
+              [ngClass]="
+                pageable?.currentPage >= pageable?.lastPage ? 'disabled' : ''
+              "
+            >
+              <a class="page-link" (click)="goToNextPage()">
+                <i class="fas fa-angle-right"></i>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+            <li
+              class="page-item"
+              [ngClass]="
+                pageable?.currentPage >= pageable?.lastPage ? 'disabled' : ''
+              "
+            >
+              <a class="page-link" (click)="goToLastPage()">
+                <i class="fas fa-angle-double-right"></i>
+                <span class="sr-only">Last</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

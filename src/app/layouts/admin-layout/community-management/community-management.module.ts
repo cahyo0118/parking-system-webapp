@@ -2,9 +2,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CommunityFormComponent } from './community-form/community-form.component';
 import { CommunitySingleComponent } from './community-single/community-single.component';
 import { CommunityComponent } from './community/community.component';
-import { CategoryComponent } from './category/category.component';
-import { CategorySingleComponent } from './category-single/category-single.component';
-import { CategoryFormComponent } from './category-form/category-form.component';
 import { CommunityManagementComponent } from './community-management.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +14,9 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import 'moment/locale/id';
 import { MomentModule } from 'ngx-moment';
 import { NgxAutocomPlaceModule } from 'ngx-autocom-place'
+import { GateComponent } from './gate/gate.component';
+import { GateSingleComponent } from './gate-single/gate-single.component';
+import { GateFormComponent } from './gate-form/gate-form.component';
 
 const routes: Routes = [
   {
@@ -29,23 +29,23 @@ const routes: Routes = [
     component: CommunityManagementComponent,
     children: [
       {
-        path: 'category',
-        component: CategoryComponent,
+        path: 'gate',
+        component: GateComponent,
       },
 
       {
-        path: 'category/:id/detail',
-        component: CategorySingleComponent,
+        path: 'gate/:id/detail',
+        component: GateSingleComponent,
       },
 
       {
-        path: 'category/create',
-        component: CategoryFormComponent,
+        path: 'gate/create',
+        component: GateFormComponent,
       },
 
       {
-        path: 'category/:id/update',
-        component: CategoryFormComponent,
+        path: 'gate/:id/update',
+        component: GateFormComponent,
       },
 
       {
@@ -74,9 +74,9 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     CommunityManagementComponent,
-    CategoryComponent,
-    CategoryFormComponent,
-    CategorySingleComponent,
+    GateComponent,
+    GateFormComponent,
+    GateSingleComponent,
     CommunityComponent,
     CommunityFormComponent,
     CommunitySingleComponent,

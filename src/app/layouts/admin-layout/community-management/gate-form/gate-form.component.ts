@@ -7,11 +7,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-category-form',
-  templateUrl: './category-form.component.html',
-  styleUrls: ['./category-form.component.css']
+  selector: 'app-gate-form',
+  templateUrl: './gate-form.component.html',
+  styleUrls: ['./gate-form.component.css']
 })
-export class CategoryFormComponent implements OnInit {
+export class GateFormComponent implements OnInit {
 
   id: any;
 
@@ -28,9 +28,9 @@ export class CategoryFormComponent implements OnInit {
   isUpdate: boolean = false;
 
   menu = {
-    name: 'category-form',
-    display_name: 'Category',
-    icon: 'fas fa-user-tag'
+    name: 'gate-form',
+    display_name: 'Gate',
+    icon: 'fas fa-torii-gate'
   };
 
   constructor(
@@ -76,7 +76,7 @@ export class CategoryFormComponent implements OnInit {
 
   getData() {
     this.apiService.get(
-      `api/category/${this.id}/detail`
+      `api/gates/${this.id}/detail`
     ).then(
       response => {
         const responseBody = response.data.body;
@@ -102,7 +102,7 @@ export class CategoryFormComponent implements OnInit {
         if (this.isUpdate) {
           this.spinner.show();
           this.apiService.put(
-            `api/category/${this.id}/update`,
+            `api/gates/${this.id}/update`,
             requestData
           ).then(
             response => {
@@ -130,7 +130,7 @@ export class CategoryFormComponent implements OnInit {
         } else {
           this.spinner.show();
           this.apiService.post(
-            `api/category/store`,
+            `api/gates/store`,
             requestData
           ).then(
             response => {

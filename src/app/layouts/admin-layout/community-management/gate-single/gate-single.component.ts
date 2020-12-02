@@ -4,11 +4,11 @@ import { APIService } from './../../../../service/api.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-category-single',
-  templateUrl: './category-single.component.html',
-  styleUrls: ['./category-single.component.css']
+  selector: 'app-gate-single',
+  templateUrl: './gate-single.component.html',
+  styleUrls: ['./gate-single.component.css']
 })
-export class CategorySingleComponent implements OnInit {
+export class GateSingleComponent implements OnInit {
 
   id: any;
 
@@ -17,9 +17,9 @@ export class CategorySingleComponent implements OnInit {
   showLoader: boolean = false;
 
   menu = {
-    name: 'category-list',
-    display_name: 'Category',
-    icon: 'fas fa-tasks'
+    name: 'gate-single',
+    display_name: 'Gate',
+    icon: 'fas fa-torii-gate'
   };
 
   constructor(
@@ -50,7 +50,7 @@ export class CategorySingleComponent implements OnInit {
 
   getData() {
     this.apiService.get(
-      `api/category/${this.id}/detail`
+      `api/gates/${this.id}/detail`
     ).then(
       response => {
         const responseBody = response.data.body;

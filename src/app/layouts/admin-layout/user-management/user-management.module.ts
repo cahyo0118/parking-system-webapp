@@ -21,6 +21,7 @@ import { ModuleFormComponent } from './module-form/module-form.component';
 import { PermissionTableComponent } from './permission-table/permission-table.component';
 import { PermissionTableSingleComponent } from './permission-table-single/permission-table-single.component';
 import { PermissionTableFormComponent } from './permission-table-form/permission-table-form.component';
+import { RolePermissionComponent } from './role-permission/role-permission.component';
 
 const routes: Routes = [
   {
@@ -146,6 +147,7 @@ const routes: Routes = [
     RoleComponent,
     RoleSingleComponent,
     RoleFormComponent,
+    RolePermissionComponent,
     ModuleComponent,
     ModuleSingleComponent,
     ModuleFormComponent,
