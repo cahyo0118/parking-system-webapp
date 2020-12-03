@@ -1,8 +1,5 @@
 import { NgSelectModule } from '@ng-select/ng-select';
-import { CommunityFormComponent } from './community-form/community-form.component';
-import { CommunitySingleComponent } from './community-single/community-single.component';
-import { CommunityComponent } from './community/community.component';
-import { CommunityManagementComponent } from './community-management.component';
+import { ParkingManagementComponent } from './parking-management.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -13,10 +10,13 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import 'moment/locale/id';
 import { MomentModule } from 'ngx-moment';
-import { NgxAutocomPlaceModule } from 'ngx-autocom-place'
 import { GateComponent } from './gate/gate.component';
 import { GateSingleComponent } from './gate-single/gate-single.component';
 import { GateFormComponent } from './gate-form/gate-form.component';
+import { ParkingComponent } from './parking/parking.component';
+import { ParkingFeeComponent } from './parking-fee/parking-fee.component';
+import { ParkingSingleComponent } from './parking-single/parking-single.component';
+import { ParkingListComponent } from './parking-list/parking-list.component';
 
 const routes: Routes = [
   {
@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: CommunityManagementComponent,
+    component: ParkingManagementComponent,
     children: [
       {
         path: 'gate',
@@ -49,37 +49,39 @@ const routes: Routes = [
       },
 
       {
-        path: 'community',
-        component: CommunityComponent,
+        path: 'parking',
+        component: ParkingComponent,
       },
 
       {
-        path: 'community/:id/detail',
-        component: CommunitySingleComponent,
+        path: 'parking-list',
+        component: ParkingListComponent,
       },
 
       {
-        path: 'community/create',
-        component: CommunityFormComponent,
+        path: 'parking/:id/detail',
+        component: ParkingSingleComponent,
       },
 
       {
-        path: 'community/:id/update',
-        component: CommunityFormComponent,
+        path: 'parking-fee',
+        component: ParkingFeeComponent,
       },
+
     ]
   },
 ];
 
 @NgModule({
   declarations: [
-    CommunityManagementComponent,
+    ParkingManagementComponent,
     GateComponent,
     GateFormComponent,
     GateSingleComponent,
-    CommunityComponent,
-    CommunityFormComponent,
-    CommunitySingleComponent,
+    ParkingComponent,
+    ParkingListComponent,
+    ParkingSingleComponent,
+    ParkingFeeComponent,
   ],
   imports: [
     CommonModule,
@@ -95,7 +97,6 @@ const routes: Routes = [
         'm': 59
       }
     }),
-    NgxAutocomPlaceModule
   ]
 })
-export class CommunityManagementModule { }
+export class ParkingManagementModule { }

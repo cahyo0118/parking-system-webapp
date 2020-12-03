@@ -1,0 +1,264 @@
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <h3 class="mb-0">
+            <i [class]="menu?.icon"></i>
+            {{ menu?.display_name }}
+          </h3>
+        </div>
+
+        <div class="card-body">
+          <div class="row mb-4">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+              <form
+                [formGroup]="formMotorBikes"
+                (submit)="onSubmitByVehicleType('motorbikes')"
+              >
+                <label class="form-control-label">Motorbike Parking Fees</label>
+                <div
+                  class="form-group"
+                  [ngClass]="{
+                    'has-success':
+                      formMotorBikes?.controls?.parking_fee?.errors?.length < 1,
+                    'has-danger': formMotorBikes?.controls?.parking_fee?.errors
+                  }"
+                >
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"
+                        >Rp.
+                      </span>
+                    </div>
+                    <input
+                      type="number"
+                      formControlName="parking_fee"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-valid':
+                          formMotorBikes?.controls?.parking_fee?.errors
+                            ?.length < 1,
+                        'is-invalid':
+                          formMotorBikes?.controls?.parking_fee?.errors
+                      }"
+                      oninput="this.value = Math.abs(this.value)"
+                      (keydown.space)="$event.preventDefault()"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  class="btn btn-primary float-right"
+                  type="submit"
+                  [disabled]="!formMotorBikes?.valid"
+                >
+                  Save
+                </button>
+              </form>
+            </div>
+
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+              <form
+                [formGroup]="formCars"
+                (submit)="onSubmitByVehicleType('cars')"
+              >
+                <label class="form-control-label">Car Parking Fees</label>
+                <div
+                  class="form-group"
+                  [ngClass]="{
+                    'has-success':
+                      formCars?.controls?.parking_fee?.errors?.length < 1,
+                    'has-danger': formCars?.controls?.parking_fee?.errors
+                  }"
+                >
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"
+                        >Rp.
+                      </span>
+                    </div>
+                    <input
+                      type="number"
+                      formControlName="parking_fee"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-valid':
+                          formCars?.controls?.parking_fee?.errors?.length < 1,
+                        'is-invalid': formCars?.controls?.parking_fee?.errors
+                      }"
+                      oninput="this.value = Math.abs(this.value)"
+                      (keydown.space)="$event.preventDefault()"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  class="btn btn-primary float-right"
+                  type="submit"
+                  [disabled]="!formCars?.valid"
+                >
+                  Save
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mt-4">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <h3 class="mb-0">
+            <i [class]="menu?.icon"></i>
+            {{ menu?.display_name }} Histories
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="item">
+                <ngx-skeleton-loader count="10" *ngIf="showLoader">
+                </ngx-skeleton-loader>
+              </div>
+            </div>
+
+            <div class="col-12" *ngIf="!showLoader">
+              <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="pointer"
+                        *ngFor="let visibleField of visibleFields"
+                        [hidden]="
+                          !this.visibleFieldForm.controls[visibleField?.name]
+                            .value
+                        "
+                        [ngClass]="{
+                          'text-primary': orderBy == visibleField?.name
+                        }"
+                        (click)="toggleOrder(visibleField?.name)"
+                      >
+                        {{ visibleField?.display_name }}
+
+                        <i
+                          class="fas fa-chevron-up"
+                          *ngIf="
+                            orderBy == visibleField?.name && orderType == 'desc'
+                          "
+                        ></i>
+
+                        <i
+                          class="fas fa-chevron-down"
+                          *ngIf="
+                            orderBy == visibleField?.name && orderType == 'asc'
+                          "
+                        ></i>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of items">
+                      <td
+                        *ngFor="let visibleField of visibleFields"
+                        [hidden]="
+                          !this.visibleFieldForm.controls[visibleField?.name]
+                            .value
+                        "
+                      >
+                        {{
+                          visibleField?.name == "vehicle_type"
+                            ? item[visibleField?.name] == "motorbikes"
+                              ? "Motor Bikes"
+                              : "Cars"
+                            : item[visibleField?.name]
+                        }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="row">
+            <div
+              class="col-xl-6 col-lg-6 col-md-12 col-sm-12 text-xl-left text-lg-left text-md-center text-sm-center text-center mt-2"
+            >
+              <p *ngIf="!showLoader">
+                Menampilkan {{ pageable?.from }} hingga {{ pageable?.to }} dari
+                {{ pageable?.total }} data
+              </p>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-2">
+              <nav>
+                <ul
+                  class="pagination justify-content-lg-end justify-content-lg-end justify-content-md-center justify-content-sm-center justify-content-center"
+                >
+                  <li
+                    class="page-item"
+                    [ngClass]="pageable?.currentPage === 1 ? 'disabled' : ''"
+                  >
+                    <a class="page-link" (click)="goToFirstPage()">
+                      <i class="fas fa-angle-double-left"></i>
+                      <span class="sr-only">First</span>
+                    </a>
+                  </li>
+                  <li
+                    class="page-item"
+                    [ngClass]="pageable?.currentPage === 1 ? 'disabled' : ''"
+                  >
+                    <a class="page-link" (click)="goToPreviousPage()">
+                      <i class="fas fa-angle-left"></i>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item my-auto">
+                    <input
+                      type="text"
+                      [(ngModel)]="pageable.currentPage"
+                      (change)="goCustom(pageable.currentPage)"
+                      class="form-control form-control-sm my-auto text-center extreme-rounded"
+                      style="width: 80px"
+                    />
+                  </li>
+                  <li
+                    class="page-item"
+                    [ngClass]="
+                      pageable?.currentPage >= pageable?.lastPage
+                        ? 'disabled'
+                        : ''
+                    "
+                  >
+                    <a class="page-link" (click)="goToNextPage()">
+                      <i class="fas fa-angle-right"></i>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                  <li
+                    class="page-item"
+                    [ngClass]="
+                      pageable?.currentPage >= pageable?.lastPage
+                        ? 'disabled'
+                        : ''
+                    "
+                  >
+                    <a class="page-link" (click)="goToLastPage()">
+                      <i class="fas fa-angle-double-right"></i>
+                      <span class="sr-only">Last</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

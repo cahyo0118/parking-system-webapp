@@ -7,11 +7,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-community',
-  templateUrl: './community.component.html',
-  styleUrls: ['./community.component.css']
+  selector: 'app-gate',
+  templateUrl: './gate.component.html',
+  styleUrls: ['./gate.component.css']
 })
-export class CommunityComponent implements OnInit {
+export class GateComponent implements OnInit {
 
   showLoader: boolean = false;
   items = [];
@@ -27,22 +27,22 @@ export class CommunityComponent implements OnInit {
   visibleFields = [
     {
       name: 'name',
-      display_name: 'Nama Komunitas',
+      display_name: 'Name',
       validators: [
         'required'
       ]
     },
     {
       name: 'description',
-      display_name: 'Deskripsi',
+      display_name: 'Description',
       validators: []
     },
   ];
 
   menu = {
-    name: 'community-list',
-    display_name: 'Daftar Komunitas',
-    icon: 'fas fa-users'
+    name: 'gate-list',
+    display_name: 'Gate',
+    icon: 'fas fa-torii-gate'
   };
 
   constructor(
@@ -80,7 +80,7 @@ export class CommunityComponent implements OnInit {
     const requestData = JSON.parse(JSON.stringify(this.searchForm.value));
 
     this.apiService.get(
-      `api/community`,
+      `api/gates`,
       {
         params: {
           keyword: requestData.keyword,
@@ -192,7 +192,7 @@ export class CommunityComponent implements OnInit {
 
         this.spinner.show();
         this.apiService.delete(
-          `api/community/${id}/delete`,
+          `api/gates/${id}/delete`,
           null
         ).then(
           response => {
@@ -211,7 +211,7 @@ export class CommunityComponent implements OnInit {
             this.spinner.hide();
 
             Swal.fire(
-              'Error!',
+              'Failed!',
               error.response.data.message,
               'error'
             );
@@ -221,56 +221,7 @@ export class CommunityComponent implements OnInit {
       }
 
     });
-  }
 
-  makeOfficial(e,f){
-    Swal.fire({
-      title: 'Jadikan Komunitas ini '+f,
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-    }).then((result) => {
-      if (result.value) {
-        this.apiService.delete(
-          `api/community/${e}/message/${e}/delete`,
-          null
-        ).then(
-          response => {
-            this.getAll()
-          },
-          error => {
-            Swal.fire(
-              'Error!',error.response.data.message,'error'
-            );
-          }
-        );
-      }
-    });
-  }
-
-  setDefault(e,f){
-    Swal.fire({
-      title: 'Jadikan Komunitas ini '+f,
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-    }).then((result) => {
-      if (result.value) {
-        this.apiService.delete(
-          `api/community/${e}/message/${e}/delete`,
-          null
-        ).then(
-          response => {
-            this.getAll()
-          },
-          error => {
-            Swal.fire(
-              'Error!',error.response.data.message,'error'
-            );
-          }
-        );
-      }
-    });
   }
 
 }

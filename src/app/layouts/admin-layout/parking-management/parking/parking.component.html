@@ -1,0 +1,107 @@
+<div class="container-fluid mt--7">
+  <form [formGroup]="form" (submit)="onSubmit()">
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <div class="card-header bg-transparent">
+            <h3 class="mb-0">
+              <i [class]="menu?.icon"></i>
+              {{ menu?.display_name }}
+            </h3>
+          </div>
+          <div class="card-body">
+            <div class="row smooth-border-bottom mb-4">
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                <label class="form-control-label">Gate</label>
+                <div
+                  class="form-group"
+                  [ngClass]="{
+                    'has-success': form?.controls?.gate_id?.errors?.length < 1,
+                    'has-danger': form?.controls?.gate_id?.errors
+                  }"
+                >
+                  <ng-select
+                    [items]="gates"
+                    bindLabel="name"
+                    bindValue="id"
+                    formControlName="gate_id"
+                    (scrollToEnd)="getAllGates(gateOffset + gateLimit)"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                <label class="form-control-label">Vehicle Type</label>
+                <div
+                  class="form-group"
+                  [ngClass]="{
+                    'has-success':
+                      form?.controls?.vehicle_type?.errors?.length < 1,
+                    'has-danger': form?.controls?.vehicle_type?.errors
+                  }"
+                >
+                  <ng-select
+                    [items]="vehicle_types"
+                    bindLabel="name"
+                    bindValue="id"
+                    formControlName="vehicle_type"
+                    (change)="getFeeByVehicleType(form?.value?.vehicle_type)"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                <label class="form-control-label">Vehicle Police Number</label>
+                <div
+                  class="form-group"
+                  [ngClass]="{
+                    'has-success':
+                      form?.controls?.vehicle_police_number?.errors?.length < 1,
+                    'has-danger': form?.controls?.vehicle_police_number?.errors
+                  }"
+                >
+                  <input
+                    type="text"
+                    formControlName="vehicle_police_number"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-valid':
+                        form?.controls?.vehicle_police_number?.errors?.length <
+                        1,
+                      'is-invalid':
+                        form?.controls?.vehicle_police_number?.errors
+                    }"
+                    oninput="this.value = this.value.toUpperCase()"
+                    (keydown.space)="$event.preventDefault()"
+                  />
+                </div>
+              </div>
+
+              <div
+                class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12"
+                *ngIf="form?.value?.vehicle_type"
+              >
+                <label class="form-control-label">Parking Fee</label>
+                <h3 class="mt-2">Rp. {{ form?.value?.parking_fee }}</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <button
+              class="btn btn-primary"
+              type="submit"
+              [disabled]="!form?.valid"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

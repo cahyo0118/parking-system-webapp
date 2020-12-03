@@ -1,216 +1,241 @@
 <div class="container mt--7">
-    <div class="row">
-        <div class="col">
-            <form [formGroup]="form"
-                  (submit)="onSubmit()">
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="card shadow">
+          <div class="card-header bg-transparent">
+            <h3 class="mb-0">
+              <i [class]="menu?.icon"></i>
+              {{ isUpdate ? "Update" : "Create" }} {{ menu?.display_name }}
+            </h3>
+          </div>
+          <div class="card-body">
+            <div class="row-fluid">
+              <div class="col-12">
+                <div class="d-flex">
+                  <i class="fas fa-quote-right fa-2x text-muted"></i>
+                  <div class="px-3 w-100">
+                    <h2>
+                      <b>Basic Info</b>
+                    </h2>
 
-                <div class="card shadow">
-                    <div class="card-header bg-transparent">
-                        <h3 class="mb-0">
-                            <i [class]="menu?.icon"></i>
-                            {{ isUpdate ? 'Update' : 'Create' }} {{ menu?.display_name }}
-                        </h3>
-                    </div>
-                    <div class="card-body">
-
+                    <div class="row-fluid mt-3">
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
                         <div class="row-fluid">
-                            <div class="col-12">
-                                <div class="d-flex">
-                                    <i class="fas fa-quote-right fa-2x text-muted"></i>
-                                    <div class="px-3 w-100">
-                                        <h2>
-                                            <b>Basic Info</b>
-                                        </h2>
+                          <div class="col-12 p-0 mb-2">
+                            <input
+                              #photoInput
+                              type="file"
+                              accept="image/*"
+                              style="display: none"
+                              (change)="onPhotoChange($event, 'logo')"
+                            />
 
-                                        <div class="row-fluid mt-3">
+                            <div class="form-group">
+                              <label class="form-control-label">Logo</label>
+                              <div
+                                class="dashed rounded img-container smooth-border pointer wh-150-px"
+                                (click)="photoInput.click()"
+                              >
+                                <img
+                                  [src]="
+                                    logoPreview
+                                      ? logoPreview
+                                      : env?.SERVER_URL +
+                                        'files/' +
+                                        form?.value?.logo
+                                  "
+                                  onerror="this.src = './assets/img/no-picture.svg'"
+                                  class="w-100 my-auto"
+                                />
+                              </div>
 
+                              <div
+                                class="w-100 mt-2"
+                                *ngIf="logoUploadProgress"
+                              >
+                                <ngb-progressbar
+                                  class="ngb-progress-150-px"
+                                  type="primary"
+                                  textType="white"
+                                  [value]="logoUploadProgress"
+                                  [showValue]="true"
+                                >
+                                </ngb-progressbar>
+                              </div>
 
-                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
-                                                <div class="row-fluid">
-
-                                                    <div class="col-12 p-0 mb-2">
-
-                                                        <input #photoInput
-                                                               type="file"
-                                                               accept="image/*"
-                                                               style="display: none;"
-                                                               (change)="onPhotoChange($event, 'logo')">
-
-                                                        <div class="form-group">
-                                                            <label class="form-control-label">Logo</label>
-                                                            <div class="dashed rounded img-container smooth-border pointer wh-150-px"
-                                                                 (click)="photoInput.click()">
-                                                                <img [src]="(logoPreview) ? logoPreview : env?.SERVER_URL + 'files/' + form?.value?.logo"
-                                                                     onerror="this.src = './assets/img/no-picture.svg'"
-                                                                     class="w-100 my-auto">
-                                                            </div>
-
-                                                            <div class="w-100 mt-2"
-                                                                 *ngIf="logoUploadProgress">
-                                                                <ngb-progressbar class="ngb-progress-150-px"
-                                                                                 type="primary"
-                                                                                 textType="white"
-                                                                                 [value]="logoUploadProgress"
-                                                                                 [showValue]="true">
-                                                                </ngb-progressbar>
-                                                            </div>
-
-                                                            <div class="w-100 mt-2"
-                                                                 *ngIf="!logoUploadProgress">
-
-                                                                <button type="button"
-                                                                        class="btn btn-outline-danger btn-sm w-150-px"
-                                                                        *ngIf="form?.value?.logo || logoPreview"
-                                                                        (click)="onDeletePhoto('logo')">
-                                                                    <i class="fas fa-trash"></i>
-                                                                    <span>Hapus</span>
-                                                                </button>
-
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12 p-0 mb-2">
-                                                        <div class="form-group">
-                                                            <label class="form-control-label">Name</label>
-                                                            <input type="text"
-                                                                   class="form-control"
-                                                                   formControlName="name">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12 p-0 mb-2">
-                                                        <div class="form-group">
-                                                            <label class="form-control-label">Short Name</label>
-                                                            <input type="text"
-                                                                   class="form-control"
-                                                                   formControlName="short_name">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12 p-0 mb-2">
-                                                        <div class="form-group">
-                                                            <label class="form-control-label">Description</label>
-                                                            <textarea formControlName="description"
-                                                                      cols="30"
-                                                                      rows="6"
-                                                                      class="form-control"></textarea>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12 p-0 mb-2">
-                                                        <div class="form-group">
-                                                            <label class="form-control-label">Address</label>
-                                                            <textarea formControlName="address"
-                                                                      cols="30"
-                                                                      rows="6"
-                                                                      class="form-control"></textarea>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12 p-0 mb-2">
-                                                        <div class="form-group">
-                                                            <label class="form-control-label">Verification</label>
-                                                            <div class="custom-control custom-checkbox mb-3">
-                                                                <input formControlName="is_verified"
-                                                                       class="custom-control-input"
-                                                                       id="customCheck2"
-                                                                       type="checkbox"
-                                                                       checked="">
-                                                                <label class="custom-control-label"
-                                                                       for="customCheck2">Verified</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-                                </div>
+                              <div
+                                class="w-100 mt-2"
+                                *ngIf="!logoUploadProgress"
+                              >
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-danger btn-sm w-150-px"
+                                  *ngIf="form?.value?.logo || logoPreview"
+                                  (click)="onDeletePhoto('logo')"
+                                >
+                                  <i class="fas fa-trash"></i>
+                                  <span>Hapus</span>
+                                </button>
+                              </div>
                             </div>
+                          </div>
 
-
-                            <div class="col-12"
-                                 *ngIf="!isUpdate">
-                                <hr>
-
-                                <div class="d-flex">
-                                    <i class="fas fa-quote-right fa-2x text-muted"></i>
-                                    <div class="px-3 w-100">
-                                        <h2>
-                                            <b>Admin Info</b>
-                                        </h2>
-
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
-                                            <div class="row-fluid">
-
-                                                <div class="col-12 p-0 mb-2">
-                                                    <div class="form-group">
-                                                        <label class="form-control-label">Name</label>
-                                                        <input type="text"
-                                                               class="form-control"
-                                                               formControlName="admin_name">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12 p-0 mb-2">
-                                                    <div class="form-group">
-                                                        <label class="form-control-label">Email</label>
-                                                        <input type="text"
-                                                               class="form-control"
-                                                               formControlName="admin_email">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12 p-0 mb-2">
-                                                    <div class="form-group">
-                                                        <label class="form-control-label">
-                                                            WhatsApp Number
-                                                        </label>
-                                                        <input type="text"
-                                                               class="form-control"
-                                                               formControlName="admin_phone_wa">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12 p-0 mb-2">
-                                                    <div class="form-group">
-                                                        <label class="form-control-label">Password</label>
-                                                        <input type="password"
-                                                               class="form-control"
-                                                               formControlName="admin_password">
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                          <div class="col-12 p-0 mb-2">
+                            <div class="form-group">
+                              <label class="form-control-label">Name</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                formControlName="name"
+                              />
                             </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <div class="form-group">
+                              <label class="form-control-label"
+                                >Short Name</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                formControlName="short_name"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <div class="form-group">
+                              <label class="form-control-label"
+                                >Description</label
+                              >
+                              <textarea
+                                formControlName="description"
+                                cols="30"
+                                rows="6"
+                                class="form-control"
+                              ></textarea>
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <div class="form-group">
+                              <label class="form-control-label">Address</label>
+                              <textarea
+                                formControlName="address"
+                                cols="30"
+                                rows="6"
+                                class="form-control"
+                              ></textarea>
+                            </div>
+                          </div>
+
+                          <div class="col-12 p-0 mb-2">
+                            <div class="form-group">
+                              <label class="form-control-label"
+                                >Verification</label
+                              >
+                              <div class="custom-control custom-checkbox mb-3">
+                                <input
+                                  formControlName="is_verified"
+                                  class="custom-control-input"
+                                  id="customCheck2"
+                                  type="checkbox"
+                                  checked=""
+                                />
+                                <label
+                                  class="custom-control-label"
+                                  for="customCheck2"
+                                  >Verified</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12" *ngIf="!isUpdate">
+                <hr />
+
+                <div class="d-flex">
+                  <i class="fas fa-quote-right fa-2x text-muted"></i>
+                  <div class="px-3 w-100">
+                    <h2>
+                      <b>Admin Info</b>
+                    </h2>
+
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
+                      <div class="row-fluid">
+                        <div class="col-12 p-0 mb-2">
+                          <div class="form-group">
+                            <label class="form-control-label">Name</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="admin_name"
+                            />
+                          </div>
                         </div>
 
+                        <div class="col-12 p-0 mb-2">
+                          <div class="form-group">
+                            <label class="form-control-label">Email</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="admin_email"
+                            />
+                          </div>
+                        </div>
 
+                        <div class="col-12 p-0 mb-2">
+                          <div class="form-group">
+                            <label class="form-control-label">
+                              WhatsApp Number
+                            </label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="admin_phone_wa"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-12 p-0 mb-2">
+                          <div class="form-group">
+                            <label class="form-control-label">Password</label>
+                            <input
+                              type="password"
+                              class="form-control"
+                              formControlName="admin_password"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
-
-                    <div class="card-footer text-right">
-                        <button class="btn btn-primary"
-                                type="button"
-                                (click)="onSubmit()"
-                                [disabled]="!form?.valid">
-                            Submit
-                        </button>
-                    </div>
-
+                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
 
-            </form>
-
+          <div class="card-footer text-right">
+            <button
+              class="btn btn-primary"
+              type="submit"
+              (click)="onSubmit()"
+              [disabled]="!form?.valid"
+            >
+              Submit
+            </button>
+          </div>
         </div>
+      </form>
     </div>
+  </div>
 </div>

@@ -121,7 +121,7 @@ export class ModuleFormComponent implements OnInit {
               this.spinner.hide();
 
               Swal.fire(
-                'Error!',
+                'Failed!',
                 error.response.data.message,
                 'error'
               );
@@ -149,7 +149,7 @@ export class ModuleFormComponent implements OnInit {
               this.spinner.hide();
 
               Swal.fire(
-                'Error!',
+                'Failed!',
                 error.response.data.message,
                 'error'
               );

@@ -19,12 +19,12 @@ const routes: Routes = [
     path: '',
     component: AdminLayoutComponent,
     children: [
-      { path: '', redirectTo: 'community-management/community', pathMatch: 'full' },
+      { path: '', redirectTo: 'parking-management/parking', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'user-profile', component: UserProfileComponent },
       {
-        path: 'community-management',
-        loadChildren: './community-management/community-management.module#CommunityManagementModule'
+        path: 'parking-management',
+        loadChildren: './parking-management/parking-management.module#ParkingManagementModule'
       },
       {
         path: 'user-management',

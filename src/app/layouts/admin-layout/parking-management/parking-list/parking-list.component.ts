@@ -4,14 +4,16 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-gate',
-  templateUrl: './gate.component.html',
-  styleUrls: ['./gate.component.css']
+  selector: 'app-parking-list',
+  templateUrl: './parking-list.component.html',
+  styleUrls: ['./parking-list.component.css']
 })
-export class GateComponent implements OnInit {
+export class ParkingListComponent implements OnInit {
 
   showLoader: boolean = false;
   items = [];
@@ -19,30 +21,41 @@ export class GateComponent implements OnInit {
   pageData: any;
 
   searchForm: FormGroup;
+  filterForm: FormGroup;
   visibleFieldForm: FormGroup;
 
   orderBy: any;
   orderType: 'asc' | 'desc' = 'desc';
 
+  vehicle_types = [
+    { id: 'motorbikes', name: 'Motorbikes' },
+    { id: 'cars', name: 'Cars' }
+  ];
+
   visibleFields = [
     {
-      name: 'name',
-      display_name: 'Name',
+      name: 'code',
+      display_name: 'Code',
       validators: [
         'required'
       ]
     },
     {
-      name: 'description',
-      display_name: 'Description',
+      name: 'vehicle_police_number',
+      display_name: 'Vehicle Police Number',
+      validators: []
+    },
+    {
+      name: 'parking_fee',
+      display_name: 'Parking Fee',
       validators: []
     },
   ];
 
   menu = {
-    name: 'gate-list',
-    display_name: 'Gate',
-    icon: 'fas fa-torii-gate'
+    name: 'parking-list',
+    display_name: 'Parking List',
+    icon: 'fas fa-parking'
   };
 
   constructor(
@@ -51,6 +64,7 @@ export class GateComponent implements OnInit {
     private apiService: APIService,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
+    private parserFormatter: NgbDateParserFormatter,
   ) { }
 
   ngOnInit(): void {
@@ -62,7 +76,8 @@ export class GateComponent implements OnInit {
       }
     );
 
-    this.orderBy = this.visibleFields[0].name;
+    // this.orderBy = this.visibleFields[0].name;
+    this.orderBy = 'id';
 
     this.initForm();
 
@@ -78,12 +93,16 @@ export class GateComponent implements OnInit {
     this.showLoader = true;
 
     const requestData = JSON.parse(JSON.stringify(this.searchForm.value));
+    const filterData = JSON.parse(JSON.stringify(this.filterForm.value));
+    filterData.start_date = this.parserFormatter.format(this.filterForm.value.start_date);
+    filterData.finish_date = this.parserFormatter.format(this.filterForm.value.finish_date);
 
     this.apiService.get(
-      `api/gates`,
+      `api/parkings`,
       {
         params: {
           keyword: requestData.keyword,
+          filters: filterData,
           limit: this.pageable.limit,
           offset: this.pageable.offset,
           orderBy: this.orderBy,
@@ -113,6 +132,12 @@ export class GateComponent implements OnInit {
   initForm() {
     this.searchForm = this.formBuilder.group({
       'keyword': [''],
+    });
+
+    this.filterForm = this.formBuilder.group({
+      'vehicle_type': [''],
+      'start_date': [''],
+      'finish_date': [''],
     });
 
     if (this.visibleFields) {
@@ -192,7 +217,7 @@ export class GateComponent implements OnInit {
 
         this.spinner.show();
         this.apiService.delete(
-          `api/gates/${id}/delete`,
+          `api/parkings/${id}/delete`,
           null
         ).then(
           response => {
@@ -211,7 +236,7 @@ export class GateComponent implements OnInit {
             this.spinner.hide();
 
             Swal.fire(
-              'Error!',
+              'Failed!',
               error.response.data.message,
               'error'
             );
@@ -222,6 +247,40 @@ export class GateComponent implements OnInit {
 
     });
 
+  }
+
+  onExportExcel() {
+
+    const requestData = JSON.parse(JSON.stringify(this.searchForm.value));
+    const filterData = JSON.parse(JSON.stringify(this.filterForm.value));
+    filterData.start_date = this.parserFormatter.format(this.filterForm.value.start_date);
+    filterData.finish_date = this.parserFormatter.format(this.filterForm.value.finish_date);
+
+    this.spinner.show();
+    this.apiService.get(
+      `api/parkings/export`,
+      {
+        responseType: 'blob',
+        params: {
+          keyword: requestData.keyword,
+          filters: filterData,
+          limit: this.pageable.limit,
+          offset: this.pageable.offset,
+          orderBy: this.orderBy,
+          orderType: this.orderType,
+        }
+      }
+    ).then(
+      response => {
+        this.spinner.hide();
+
+        saveAs(response.data, `parking[${filterData.start_date}-${filterData.finish_date}].xlsx`)
+
+      },
+      error => {
+        this.spinner.hide();
+      }
+    );
   }
 
 }

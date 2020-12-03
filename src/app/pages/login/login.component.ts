@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.log('error', error.response.data);
 
         Swal.fire(
-          'Error!',
+          'Failed!',
           error.response.data.message,
           'error'
         );

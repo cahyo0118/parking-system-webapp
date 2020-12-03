@@ -102,3 +102,16 @@ ngb-progressbar {
 .ng-arrow-wrapper {
   margin-right: 40px !important;
 }
+
+// Border
+.smooth-border {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.smooth-border-top {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.smooth-border-bottom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}

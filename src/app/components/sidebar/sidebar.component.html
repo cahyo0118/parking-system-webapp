@@ -16,7 +16,7 @@
     <a
       class="navbar-brand pt-0"
       routerLinkActive="active"
-      [routerLink]="['/admin/community-management/community']"
+      [routerLink]="['/admin/parking-management/parking']"
     >
       <img
         src="./assets/img/brand/logo-admin.png"
@@ -71,7 +71,7 @@
             <!-- <a routerLinkActive="active" [routerLink]="['/dashboard']"> -->
             <a
               routerLinkActive="active"
-              [routerLink]="['/admin/community-management/community']"
+              [routerLink]="['/admin/parking-management/parking']"
             >
               <img src="./assets/img/brand/logo-admin.png" />
             </a>
@@ -118,6 +118,7 @@
             Reports
           </a>
         </li>
+
       </ul>
 
       <!-- <ul class="navbar-nav">
@@ -135,7 +136,7 @@
         <li class="nav-item">
           <a
             class="nav-link"
-            [routerLink]="['/admin/community-management/gate']"
+            [routerLink]="['/admin/parking-management/gate']"
             routerLinkActive="active text-primary"
           >
             <i class="fas fa-torii-gate"></i> Gate
@@ -145,10 +146,30 @@
         <li class="nav-item">
           <a
             class="nav-link"
-            [routerLink]="['/admin/community-management/community']"
+            [routerLink]="['/admin/parking-management/parking-fee']"
             routerLinkActive="active text-primary"
           >
-            <i class="fas fa-users"></i> Komunitas
+            <i class="fas fa-money-bill-wave"></i> Parking Fee
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/admin/parking-management/parking']"
+            routerLinkActive="active text-primary"
+          >
+            <i class="fas fa-parking"></i> Parking
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/admin/parking-management/parking-list']"
+            routerLinkActive="active text-primary"
+          >
+            <i class="fas fa-parking"></i> Parking List
           </a>
         </li>
       </ul>
